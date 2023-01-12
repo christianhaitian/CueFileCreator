@@ -3,7 +3,7 @@
 import glob, os, sys
 import re
 
-ROMS_PATH = "sys.argv"
+ROMS_PATH = sys.argv[1]
 
 def static():
 	pass
