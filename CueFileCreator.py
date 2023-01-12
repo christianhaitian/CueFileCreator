@@ -2,6 +2,7 @@
 
 import glob, os, sys
 import re
+from os import walk
 
 ROMS_PATH = sys.argv[1]
 
@@ -88,7 +89,7 @@ def getAllBinFiles():
 			if existsCueFileName(myCueFilenameFormat.format(myTempCueFilename)) == False:
 				
 				myCueFilename = myTempCueFilename
-				
+
 			else:
 			
 				continue
@@ -102,9 +103,55 @@ def getAllBinFiles():
 			
 			
 			
+	print (myCueFilename + ".cue")
 	print ("DONE")
+
+def getAllBinSubFiles():
+
+  for (dirpath, dirnames, filenames) in walk(ROMS_PATH):
+	  for dir in dirnames:
+	    myCounter = 0
+	    myTrackNumber = 1
+	    myCueFilenameFormat = "{0}.cue"
+	    mySearchFilePath = os.path.join(ROMS_PATH + dir, "*.bin")
+	    myCueFilename = None
+	
+	    myFileList = sorted(glob.glob(mySearchFilePath))
+	
+	    myFileListSize = len(myFileList);
+	
+	    for myFileName in myFileList:
+
+		    myCounter = myCounter + 1
+
+		    print("\rProcessing....{0:.0f}%\t".format((myCounter / myFileListSize) * 100), end="")
+			
+		    myTempCueFilename = getCueFileName(myFileName)
+	
+		    if myCueFilename == None or myCueFilename != myTempCueFilename:
+			
+			    myTrackNumber = 1
+
+			    if existsCueFileName(myCueFilenameFormat.format(myTempCueFilename)) == False:
+				
+				    myCueFilename = myTempCueFilename
+				
+			    else:
+			
+				    continue
+		
+				
+		    if myCueFilename != None:
+
+			    writeTrack(myCueFilenameFormat.format(myCueFilename), myFileName, myTrackNumber)
+			    myTrackNumber = myTrackNumber + 1
+			
+			
+	    print (myCueFilename + ".cue")
+	    print ("DONE")
 
 
 static.regularExpressions = None
 
 getAllBinFiles()
+getAllBinSubFiles()
