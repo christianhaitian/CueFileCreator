@@ -78,8 +78,6 @@ def getAllBinFiles():
 
 		myCounter = myCounter + 1
 
-		print("\rProcessing....{0:.0f}%\t".format((myCounter / myFileListSize) * 100), end="")
-
 		myTempCueFilename = getCueFileName(myFileName)
 
 		if myCueFilename == None or myCueFilename != myTempCueFilename:
@@ -100,11 +98,8 @@ def getAllBinFiles():
 			writeTrack(myCueFilenameFormat.format(myCueFilename), myFileName, myTrackNumber)
 
 			myTrackNumber = myTrackNumber + 1
-
-
-
-	print (myCueFilename + ".cue")
-	print ("DONE")
+			with open('/dev/shm/CueFileCreator.log', 'a') as f:
+			    print (myCueFilename + ".cue", file=f)
 
 def getAllBinSubFiles():
 
@@ -123,8 +118,6 @@ def getAllBinSubFiles():
 	    for myFileName in myFileList:
 
 		    myCounter = myCounter + 1
-
-		    print("\rProcessing....{0:.0f}%\t".format((myCounter / myFileListSize) * 100), end="")
 
 		    myTempCueFilename = getCueFileName(myFileName)
 
@@ -145,11 +138,8 @@ def getAllBinSubFiles():
 
 			    writeTrack(myCueFilenameFormat.format(myCueFilename), myFileName, myTrackNumber)
 			    myTrackNumber = myTrackNumber + 1
-
-
-	    print (myCueFilename + ".cue")
-	    print ("DONE")
-
+			    with open('/dev/shm/CueFileCreator.log', 'a') as f:
+			        print (myCueFilename + ".cue", file=f)
 
 static.regularExpressions = None
 
