@@ -99,10 +99,18 @@ userExit() {
 }
 
 function main_menu() {
-    local options=( "$whichsd/dreamcast" "" \
+    local options=( "$whichsd/3do" "" \
+	                "$whichsd/amigacd32" "" \
+	                "$whichsd/dos" "" \
+	                "$whichsd/dreamcast" "" \
+	                "$whichsd/neogeocd" "" \
+	                "$whichsd/pcenginecd" "" \
                     "$whichsd/pcfx" "" \
                     "$whichsd/psx" "" \
-                    "$whichsd/segacd" "" )
+                    "$whichsd/segacd" "" \
+                    "$whichsd/saturn" "" \
+                    "$whichsd/supergrafx" "" \
+	                "$whichsd/turbografxcd" "" )
 
     while true; do
        selection=(dialog \
