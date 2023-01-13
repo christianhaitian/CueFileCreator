@@ -71,6 +71,19 @@ if [ "$?" != "0" ]; then
   temp=$(grep "title=" /usr/share/plymouth/themes/text.plymouth)
 fi
 
+# Welcome
+ dialog --backtitle "CUE File Creator" --title "CUE File Creator Utility" \
+    --yesno "\nThe script will automate the creation of CUE files for all the .bin files found in various CD based roms path.\n
+	The main python script used by this tool was originally created by A Former User for Retropie. \n(https://retropie.org.uk/forum/topic/31984/psx-cue-file-maker-script)
+ \n\n\nDo you want to proceed?" $height $width 2>&1 > /dev/tty1
+
+case $? in
+       1) sudo kill -9 $(pidof oga_controls)
+          sudo systemctl restart oga_events &
+          exit
+          ;;
+esac
+
 userExit() {
   sudo kill -9 $(pidof oga_controls)
   sudo systemctl restart oga_events &
