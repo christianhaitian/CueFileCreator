@@ -14,11 +14,18 @@ def writeTrack(aCueFilename, aFilename, aTrackNumber):
 	myOutputText = ""
 	myFilenameWithoutPath = os.path.basename(aFilename)
 
-	if aTrackNumber == 1:
+	if aTrackNumber == 1 and "/pcfx/" not in aFilename and aTrackNumber == 1 and "/pcenginecd/" not in aFilename and aTrackNumber == 1 and "/turbografxcd/" not in aFilename:
 		myOutputText = "FILE \"{filename}\" BINARY\nTRACK {track:02d} MODE1/2352\nINDEX {track:02d} 00:00:00"\
-			.format(filename = myFilenameWithoutPath, track = aTrackNumber)
+		 .format(filename = myFilenameWithoutPath, track = aTrackNumber)
+	elif aTrackNumber == 2 and "/pcfx/" in aFilename or aTrackNumber == 2 and "/pcenginecd/" in aFilename or aTrackNumber == 2 and "/turbografxcd/" in aFilename:
+		myOutputText = "\nFILE \"{filename}\" BINARY\nTRACK {track:02d} MODE1/2352\nINDEX 00 00:00:00\nINDEX 01 00:03:00\n"\
+		 .format(filename = myFilenameWithoutPath, track = aTrackNumber)
 	else:
-		myOutputText = "\nTRACK \"{filename}\" BINARY\nTRACK {track:02d} AUDIO\nINDEX 00 00:00:00\nINDEX 01 00:02:00"\
+		if "/segacd/" or "/neogeocd/" or "/pcfx/" or "/pcenginecd/" or "/turbografxcd/" in aFilename:
+		   myOutputText = "\nFILE \"{filename}\" BINARY\nTRACK {track:02d} AUDIO\nINDEX 00 00:00:00\nINDEX 01 00:02:00"\
+			.format(filename = myFilenameWithoutPath, track = aTrackNumber)
+		else:
+		   myOutputText = "\nTRACK \"{filename}\" BINARY\nTRACK {track:02d} AUDIO\nINDEX 00 00:00:00\nINDEX 01 00:02:00"\
 			.format(filename = myFilenameWithoutPath, track = aTrackNumber)
 
 	try:
