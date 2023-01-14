@@ -3,11 +3,14 @@
 #IFS=';'
 
 ESUDO="sudo"
+export TERM=linux
+sudo echo "Testing for sudo..."
 if [ $? != 0 ]; then
   ESUDO=""
+  . /usr/bin/env.sh
+  export TERM=xterm-color
 fi
 $ESUDO chmod 666 /dev/tty1
-export TERM=linux
 export XDG_RUNTIME_DIR=/run/user/$UID/
 printf "\033c" > /dev/tty1
 dialog --clear
@@ -99,11 +102,7 @@ userExit() {
 }
 
 function main_menu() {
-    local options=( "$whichsd/3do" "" \
-                    "$whichsd/amigacd32" "" \
-                    "$whichsd/dos" "" \
-                    "$whichsd/dreamcast" "" \
-                    "$whichsd/neogeocd" "" \
+    local options=( "$whichsd/neogeocd" "" \
                     "$whichsd/pcenginecd" "" \
                     "$whichsd/pcfx" "" \
                     "$whichsd/psx" "" \
